@@ -19,6 +19,9 @@ export class GameService {
 
   readonly isRunning = signal(false);
 
+  readonly generationCount = signal(0);
+  readonly livingCellCount = computed(() => this.grid().filter(Boolean).length);
+
   play() {
     if (this.isRunning()) return;
     this.isRunning.set(true);
@@ -40,6 +43,7 @@ export class GameService {
   }
 
   tick() {
+    this.generationCount.update((count) => count + 1);
     this.grid.update((grid) => {
       return grid.map((_, i) => {
         const neightbors = this.countNeighbors(grid, i);
@@ -96,6 +100,12 @@ export class GameService {
       this.pause();
       this.play();
     }
+  }
+
+  randomFill(density = 0.3) {
+    this.grid.update((grid) => {
+      return grid.map(() => Math.random() < density);
+    });
   }
 
   private emptyGrid(): boolean[] {
