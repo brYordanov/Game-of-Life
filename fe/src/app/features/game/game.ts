@@ -5,10 +5,7 @@ import { Controls } from './controls/controls';
 @Component({
   selector: 'app-game',
   imports: [Board, Controls],
-  template: `
-    <app-board />
-    <app-controls />
-  `,
+  templateUrl: './game.html',
   styleUrl: './game.css',
 })
 export class Game {}

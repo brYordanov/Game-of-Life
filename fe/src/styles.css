@@ -6,3 +6,44 @@ body {
   background-color: black;
   height: 100%;
 }
+
+:root {
+  --color-primary: #22c55e;
+  --color-primary-hover: #16a34a;
+  --color-dark: #1a1a1a;
+  --color-border: #333;
+  --color-text: #fff;
+}
+
+p {
+  margin: 0;
+}
+
+.btn {
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #000;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-primary);
+}

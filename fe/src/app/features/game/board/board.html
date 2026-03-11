@@ -1,4 +1,4 @@
-<div class="board" [style.--cols]="game.cols" [style.--rows]="game.rows" tabindex="0">
+<div class="board" [style.--cols]="game.cols" [style.--rows]="game.rows" tabindex="0" #boardEl>
   @for (cell of game.grid(); track $index) {
     <div
       class="cell"
@@ -6,5 +6,14 @@
       [class.cursor]="$index === game.cursorIndex()"
       (click)="game.toggle($index)"
     ></div>
+  }
+  @if (showDialog()) {
+    <app-dialog (close)="closeDialog()" (accept)="acceptDialog()">
+      <h2>Controls</h2>
+      <p>Use Arrow keys or W, A, S, D to move the cursor</p>
+      <p>Use Enter or Space keys to select/deselect a cell</p>
+      <p>Or.....</p>
+      <p>Simply use mouse</p>
+    </app-dialog>
   }
 </div>
