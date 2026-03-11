@@ -1,0 +1,5 @@
+<div class="board" [style.--cols]="game.cols" [style.--rows]="game.rows">
+  @for (cell of game.grid(); track $index) {
+    <div class="cell" [class.alive]="cell" (click)="game.toggle($index)"></div>
+  }
+</div>
