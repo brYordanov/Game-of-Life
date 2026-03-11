@@ -4,7 +4,7 @@
       class="cell"
       [class.alive]="cell"
       [class.cursor]="$index === game.cursorIndex()"
-      (click)="game.toggle($index)"
+      (click)="game.toggleCell($index)"
     ></div>
   }
   @if (showDialog()) {

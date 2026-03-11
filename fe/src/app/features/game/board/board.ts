@@ -20,7 +20,7 @@ import { ControllKeys } from './board.types';
 export class Board implements AfterViewInit {
   @ViewChild('boardEl') boardEl!: ElementRef;
   readonly game = inject(GameService);
-  readonly showDialog = signal(sessionStorage.getItem('dialogAccepted') !== 'true');
+  readonly showDialog = signal(sessionStorage.getItem('controlsDialogAccepted') !== 'true');
 
   @HostListener('keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
@@ -47,7 +47,7 @@ export class Board implements AfterViewInit {
   }
 
   acceptDialog() {
-    sessionStorage.setItem('dialogAccepted', 'true');
+    sessionStorage.setItem('controlsDialogAccepted', 'true');
     this.closeDialog();
   }
 

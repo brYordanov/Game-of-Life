@@ -4,18 +4,56 @@ import { computed, Injectable, signal } from '@angular/core';
 export class GameService {
   readonly rows = 40;
   readonly cols = 60;
+  readonly speedSteps = [0.25, 0.5, 1, 2, 4, 8];
+  private intervalId: ReturnType<typeof setInterval> | null = null;
 
   readonly grid = signal(this.emptyGrid());
   readonly midIndex = computed(
     () => Math.floor(this.rows / 2) * this.cols + Math.floor(this.cols / 2),
   );
   readonly cursorIndex = signal(this.midIndex());
+  readonly speedIndex = signal(2);
 
-  constructor() {
-    console.log(this.midIndex());
+  readonly speedMultiplier = computed(() => this.speedSteps[this.speedIndex()]);
+  readonly intervalMs = computed(() => 150 / this.speedMultiplier());
+
+  readonly isRunning = signal(false);
+
+  play() {
+    if (this.isRunning()) return;
+    this.isRunning.set(true);
+    this.intervalId = setInterval(() => this.tick(), this.intervalMs());
   }
 
-  toggle(index: number) {
+  pause() {
+    this.isRunning.set(false);
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+
+  reset() {
+    this.pause();
+    this.grid.set(this.emptyGrid());
+    this.cursorIndex.set(this.midIndex());
+  }
+
+  tick() {
+    this.grid.update((grid) => {
+      return grid.map((_, i) => {
+        const neightbors = this.countNeighbors(grid, i);
+        const isCurrentElAlive = grid[i];
+
+        if (isCurrentElAlive) {
+          return neightbors === 2 || neightbors === 3;
+        }
+        return neightbors === 3;
+      });
+    });
+  }
+
+  toggleCell(index: number) {
     this.grid.update((g) => {
       const newGrid = [...g];
       newGrid[index] = !newGrid[index];
@@ -25,7 +63,7 @@ export class GameService {
   }
 
   toggleCursor() {
-    this.toggle(this.cursorIndex());
+    this.toggleCell(this.cursorIndex());
   }
 
   moveCursor(dir: 'up' | 'down' | 'left' | 'right') {
@@ -52,7 +90,44 @@ export class GameService {
     this.cursorIndex.set(next);
   }
 
+  cycleSpeedSetting() {
+    this.speedIndex.update((i) => (i + 1) % this.speedSteps.length);
+    if (this.isRunning()) {
+      this.pause();
+      this.play();
+    }
+  }
+
   private emptyGrid(): boolean[] {
     return new Array(this.rows * this.cols).fill(false);
+  }
+
+  private countNeighbors(grid: boolean[], index: number): number {
+    const row = Math.floor(index / this.cols);
+    const col = index % this.cols;
+    let count = 0;
+
+    for (let rowOffset = -1; rowOffset <= 1; rowOffset++) {
+      for (let colOffset = -1; colOffset <= 1; colOffset++) {
+        const isTargetedEl = rowOffset === 0 && colOffset === 0;
+        if (isTargetedEl) continue;
+
+        const currentElRow = row + rowOffset;
+        const currentElCol = col + colOffset;
+
+        const isOutOfBounds =
+          currentElCol < 0 ||
+          currentElRow < 0 ||
+          currentElRow > this.rows ||
+          currentElCol > this.cols;
+
+        if (isOutOfBounds) continue;
+
+        const currentElFlatArrIndex = currentElRow * this.cols + currentElCol;
+        if (grid[currentElFlatArrIndex]) count++;
+      }
+    }
+
+    return count;
   }
 }

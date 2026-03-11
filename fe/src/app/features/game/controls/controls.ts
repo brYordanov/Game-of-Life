@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-controls',
@@ -6,4 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './controls.html',
   styleUrl: './controls.css',
 })
-export class Controls {}
+export class Controls {
+  readonly game = inject(GameService);
+  readonly isOpen = signal(false);
+}
