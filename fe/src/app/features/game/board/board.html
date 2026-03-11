@@ -1,5 +1,10 @@
-<div class="board" [style.--cols]="game.cols" [style.--rows]="game.rows">
+<div class="board" [style.--cols]="game.cols" [style.--rows]="game.rows" tabindex="0">
   @for (cell of game.grid(); track $index) {
-    <div class="cell" [class.alive]="cell" (click)="game.toggle($index)"></div>
+    <div
+      class="cell"
+      [class.alive]="cell"
+      [class.cursor]="$index === game.cursorIndex()"
+      (click)="game.toggle($index)"
+    ></div>
   }
 </div>
