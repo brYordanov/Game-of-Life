@@ -15,7 +15,7 @@ export class GameService {
   readonly speedIndex = signal(2);
 
   readonly speedMultiplier = computed(() => this.speedSteps[this.speedIndex()]);
-  readonly intervalMs = computed(() => 150 / this.speedMultiplier());
+  readonly intervalMs = computed(() => 400 / this.speedMultiplier());
 
   readonly isRunning = signal(false);
 

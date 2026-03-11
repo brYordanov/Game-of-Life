@@ -15,8 +15,8 @@
       />
     </svg>
   </button>
-  <button class="btn btn-secondary">
-    @if (game.isRunning()) {
+  @if (game.isRunning()) {
+    <button class="btn btn-secondary" (click)="game.pause()">
       <svg
         width="24px"
         height="24px"
@@ -38,7 +38,9 @@
           fill="var(--color-primary)"
         />
       </svg>
-    } @else {
+    </button>
+  } @else {
+    <button class="btn btn-secondary" (click)="game.play()">
       <svg
         width="24px"
         height="24px"
@@ -54,10 +56,12 @@
           fill="var(--color-primary)"
         />
       </svg>
-    }
+    </button>
+  }
+  <button class="btn btn-secondary" (click)="game.cycleSpeedSetting()">
+    {{ game.speedMultiplier() }}x
   </button>
-  <button class="btn btn-secondary">1x</button>
-  <button class="btn btn-secondary">
+  <button class="btn btn-secondary" (click)="game.reset()">
     <svg
       fill="none"
       width="24px"
