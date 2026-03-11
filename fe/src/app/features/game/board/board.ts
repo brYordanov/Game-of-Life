@@ -21,6 +21,7 @@ export class Board implements AfterViewInit {
   @ViewChild('boardEl') boardEl!: ElementRef;
   readonly game = inject(GameService);
   readonly showDialog = signal(sessionStorage.getItem('controlsDialogAccepted') !== 'true');
+  isMouseDown = false;
 
   @HostListener('keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
@@ -39,6 +40,14 @@ export class Board implements AfterViewInit {
     } else if (e.key === ControllKeys.Space || e.key === ControllKeys.Enter) {
       this.game.toggleCursor();
     }
+  }
+
+  onMouseMove(e: MouseEvent) {
+    if (!this.isMouseDown || !e.target) return;
+    const cell = (e.target as HTMLElement).closest('.cell');
+    if (!cell) return;
+    const index = Number((cell as HTMLElement).dataset['index']);
+    this.game.setCell(index, true);
   }
 
   closeDialog() {

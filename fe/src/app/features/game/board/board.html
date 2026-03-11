@@ -1,10 +1,20 @@
-<div class="board" [style.--cols]="game.cols" [style.--rows]="game.rows" tabindex="0" #boardEl>
+<div
+  class="board"
+  [style.--cols]="game.cols"
+  [style.--rows]="game.rows"
+  tabindex="0"
+  #boardEl
+  (mousedown)="isMouseDown = true"
+  (mouseup)="isMouseDown = false"
+  (mouseleave)="isMouseDown = false"
+  (mousemove)="onMouseMove($event)"
+>
   @for (cell of game.grid(); track $index) {
     <div
       class="cell"
       [class.alive]="cell"
       [class.cursor]="$index === game.cursorIndex()"
-      (click)="game.toggleCell($index)"
+      [attr.data-index]="$index"
     ></div>
   }
   @if (showDialog()) {
@@ -13,7 +23,7 @@
       <p>Use Arrow keys or W, A, S, D to move the cursor</p>
       <p>Use Enter or Space keys to select/deselect a cell</p>
       <p>Or.....</p>
-      <p>Simply use mouse</p>
+      <p>Simply use mouse(can draw)</p>
     </app-dialog>
   }
 </div>

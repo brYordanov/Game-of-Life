@@ -40,6 +40,7 @@ export class GameService {
     this.pause();
     this.grid.set(this.emptyGrid());
     this.cursorIndex.set(this.midIndex());
+    this.generationCount.set(0);
   }
 
   tick() {
@@ -64,6 +65,14 @@ export class GameService {
       return newGrid;
     });
     this.cursorIndex.set(index);
+  }
+
+  setCell(index: number, value: boolean) {
+    this.grid.update((g) => {
+      const newGrid = [...g];
+      newGrid[index] = value;
+      return newGrid;
+    });
   }
 
   toggleCursor() {
