@@ -192,5 +192,5 @@
   </button>
 </div>
 @if (isPatternsDialogOpen()) {
-  <app-patterns-dialog (close)="isPatternsDialogOpen.set(false)" />
+  <app-patterns-dialog (close)="isPatternsDialogOpen.set(false)" (select)="onPatternSelect($event)" />
 }

@@ -1,4 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
+import { Pattern } from './patterns.service';
 
 @Injectable({ providedIn: 'root' })
 export class GameService {
@@ -109,6 +110,22 @@ export class GameService {
       this.pause();
       this.play();
     }
+  }
+
+  loadPattern(pattern: Pattern) {
+    const newGrid = this.emptyGrid();
+    const startRow = Math.floor((this.rows - pattern.height) / 2);
+    const startCol = Math.floor((this.cols - pattern.width) / 2);
+
+    for (let rowOffset = 0; rowOffset < pattern.height; rowOffset++) {
+      for (let colOffset = 0; colOffset < pattern.width; colOffset++) {
+        const gridIndex = (startRow + rowOffset) * this.cols + (startCol + colOffset);
+        newGrid[gridIndex] = pattern.cells[rowOffset * pattern.width + colOffset];
+      }
+    }
+
+    this.reset();
+    this.grid.set(newGrid);
   }
 
   randomFill(density = 0.3) {
