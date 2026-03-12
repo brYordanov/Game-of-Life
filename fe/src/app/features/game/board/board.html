@@ -4,6 +4,7 @@
   [style.--rows]="game.rows"
   tabindex="0"
   #boardEl
+  (click)="onClick($event)"
   (mousedown)="isMouseDown = true"
   (mouseup)="isMouseDown = false"
   (mouseleave)="isMouseDown = false"

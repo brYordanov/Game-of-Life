@@ -50,6 +50,14 @@ export class Board implements AfterViewInit {
     this.game.setCell(index, true);
   }
 
+  onClick(e: MouseEvent) {
+    if (!e.target) return;
+    const cell = (e.target as HTMLElement).closest('.cell');
+    if (!cell) return;
+    const index = Number((cell as HTMLElement).dataset['index']);
+    this.game.toggleCell(index);
+  }
+
   closeDialog() {
     this.showDialog.set(false);
     this.boardEl.nativeElement.focus();
