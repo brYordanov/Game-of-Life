@@ -16,7 +16,6 @@ services:
       retries: 5
     volumes:
       - mongo_data:/data/db
-      - ./mongo-init:/docker-entrypoint-initdb.d:ro
 
 volumes:
   mongo_data:

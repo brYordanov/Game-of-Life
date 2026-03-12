@@ -5,16 +5,16 @@ export type PatternDocument = HydratedDocument<Pattern>;
 
 @Schema()
 export class Pattern {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ type: Number, required: true })
   width: number;
 
-  @Prop({ required: true })
+  @Prop({ type: Number, required: true })
   height: number;
 
-  @Prop()
+  @Prop({ type: String })
   description: string;
 
   @Prop({ type: [Boolean], required: true })
