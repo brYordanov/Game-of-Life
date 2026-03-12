@@ -154,8 +154,8 @@ export class GameService {
         const isOutOfBounds =
           currentElCol < 0 ||
           currentElRow < 0 ||
-          currentElRow > this.rows ||
-          currentElCol > this.cols;
+          currentElRow >= this.rows ||
+          currentElCol >= this.cols;
 
         if (isOutOfBounds) continue;
 
