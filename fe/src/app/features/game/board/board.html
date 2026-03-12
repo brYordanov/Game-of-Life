@@ -8,6 +8,7 @@
   (mousedown)="isMouseDown = true"
   (mouseup)="isMouseDown = false"
   (mouseleave)="isMouseDown = false"
+  (dragstart)="$event.preventDefault()"
   (mousemove)="onMouseMove($event)"
 >
   @for (cell of game.grid(); track $index) {
