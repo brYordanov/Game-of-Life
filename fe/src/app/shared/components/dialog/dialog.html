@@ -1,7 +1,9 @@
 <div class="overlay">
   <div class="dialog">
     <ng-content />
-    <button class="btn btn-primary" (click)="accept.emit()">Got it</button>
+    @if (showAccept) {
+      <button class="btn btn-primary" (click)="accept.emit()">{{ acceptLabel }}</button>
+    }
     <button (click)="close.emit()" class="btn btn-secondary dialog__close">
       <svg
         width="24px"

@@ -1,0 +1,12 @@
+.patterns-dialog__header {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  color: var(--color-text);
+}
+
+.patterns-dialog__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}

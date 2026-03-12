@@ -18,7 +18,7 @@
     ></div>
   }
   @if (showDialog()) {
-    <app-dialog (close)="closeDialog()" (accept)="acceptDialog()">
+    <app-dialog (close)="closeDialog()" (accept)="acceptDialog()" acceptLabel="Got It">
       <h2>Controls</h2>
       <p>Use Arrow keys or W, A, S, D to move the cursor</p>
       <p>Use Enter or Space keys to select/deselect a cell</p>

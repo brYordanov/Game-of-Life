@@ -1,0 +1,14 @@
+<app-dialog [showAccept]="false" (close)="close.emit()">
+  <h2 class="patterns-dialog__header">Famous Patterns</h2>
+  <div class="patterns-dialog__list">
+    @for (pattern of patterns(); track pattern._id) {
+      <button
+        class="btn btn-primary"
+        [title]="pattern.description"
+        (click)="select.emit(pattern._id)"
+      >
+        {{ pattern.name }}
+      </button>
+    }
+  </div>
+</app-dialog>
